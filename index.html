@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryan Rossner, PhD. | Biological Architect</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-white: #ffffff; 
+            --text-off-white: #dcdcdc; 
+            --text-silver: #bbbbbb; 
+            --text-grey: #999999;
+            --accent: #00ffcc; 
+            --modal-bg: rgba(10, 10, 10, 0.95);
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            padding-top: 60px; 
+        }
+
+        .container { max-width: 750px; margin: 0 auto; padding: 0 20px; }
+
+        nav.main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 15px 0;
+        }
+
+        .nav-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 20px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-inner a { text-decoration: none; color: var(--text-grey); transition: 0.3s; }
+        .nav-inner a:hover { color: var(--accent); }
+
+        section {
+            padding: 80px 0; 
+            border-bottom: 1px solid #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        header { 
+            margin-bottom: 35px; 
+            border-left: 2px solid var(--accent);
+            padding-left: 25px;
+        }
+        
+        .eyebrow {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        h1, h2 {
+            font-size: 3.5rem; 
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            color: var(--text-white);
+            letter-spacing: -1.5px;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            color: var(--text-off-white);
+            margin-bottom: 10px;
+        }
+
+        .mission-list {
+            list-style: none;
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            margin-top: 25px;
+        }
+
+        .mission-list li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+        .mission-list li::before { content: ">"; position: absolute; left: 0; color: var(--accent); }
+        .mission-list a { text-decoration: none; color: var(--text-off-white); transition: 0.3s; }
+        .mission-list a:hover { color: var(--accent); padding-left: 5px; }
+
+        .tab-menu {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .tab-btn { cursor: pointer; color: #555; transition: 0.3s; }
+        .tab-btn.active { color: var(--text-white); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 8px; }
+
+        .content-section { display: none; min-height: 180px; animation: fadeIn 0.5s ease; }
+        .content-section.visible { display: block; }
+
+        .review { margin-bottom: 30px; }
+        .quote { font-size: 1.05rem; font-style: italic; color: var(--text-white); margin-bottom: 10px; }
+        .author-block { border-left: 1px solid var(--accent); padding-left: 15px; }
+        .author-name { display: block; font-family: var(--font-mono); color: var(--accent); font-size: 1rem; font-weight: bold; }
+        .ig-link { color: var(--accent); opacity: 0.6; transition: 0.3s; text-decoration: none; }
+        .ig-link:hover { opacity: 1; }
+        .author-title { display: block; font-family: var(--font-mono); color: var(--text-grey); font-size: 0.85rem; margin-top: 3px; }
+
+        .btn-primary {
+            display: inline-block;
+            background: transparent;
+            color: var(--text-white);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 15px 40px;
+            border: 1px solid var(--text-white);
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-primary:hover { background: var(--accent); color: black; border-color: var(--accent); }
+        .btn-accent { border-color: var(--accent); color: var(--accent); }
+        .btn-accent:hover { background: var(--accent); color: black; }
+
+        .book-layout { display: flex; gap: 50px; align-items: flex-start; }
+
+        .book-cover {
+            flex-shrink: 0;
+            width: 340px;
+            border: 1px solid #222;
+            position: relative;
+        }
+
+        .book-cover img { width: 100%; display: block; }
+
+        .book-cover-fallback {
+            display: none;
+            width: 100%;
+            height: 300px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--text-white);
+            text-transform: uppercase;
+        }
+
+        .book-cover-sub { color: var(--text-grey); font-size: 0.7rem; }
+        .book-info { display: flex; flex-direction: column; gap: 30px; }
+
+        .photo-placeholder {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            display: block;
+            border: 1px solid #1a1a1a;
+            filter: grayscale(20%);
+        }
+
+        .photo-fallback {
+            display: none;
+            width: 100%;
+            height: 260px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-grey);
+            text-transform: uppercase;
+        }
+
+        .photo-fallback-sub { font-size: 0.65rem; color: #444; }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid #111;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .footer-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-grey);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .social-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-grey);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover { color: var(--accent); }
+
+        .book-desc {
+            font-size: 1.1rem;
+            color: var(--text-off-white);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .book-layout { flex-direction: column; gap: 30px; }
+            .book-cover { width: 100%; max-width: 280px; }
+        }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-bg); z-index: 3000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
+        .modal-box { background: #000; border: 1px solid #333; width: 90%; max-width: 500px; padding: 40px; position: relative; }
+        .form-label { display: block; font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+        .form-input, .form-textarea { width: 100%; background: #0a0a0a; border: 1px solid #333; color: white; padding: 15px; margin-bottom: 20px; font-family: var(--font-sans); }
+        .submit-btn { width: 100%; background: white; color: black; padding: 18px; border: none; font-family: var(--font-mono); text-transform: uppercase; font-weight: bold; cursor: pointer; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 650px) { h1 { font-size: 2.8rem; } }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-inner">
+            <a href="#home">Home</a>
+            <a href="#god-project">God Project</a>
+            <a href="#bio-consulting">Bio-Consulting</a>
+            <a href="#minicircle">MiniCircle</a>
+            <a href="#writing">Writing</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <section id="home">
+            <header>
+                <h1>Ryan<br>Rossner, PhD.</h1>
+            </header>
+            <div class="intro-text">
+                <p>My mission is to turn humans into gods.</p>
+            </div>
+            <div style="height: 20px;"></div>
+            <div class="intro-text">
+                <p>I currently pursue this mission through:</p>
+            </div>
+            <ul class="mission-list">
+                <li><a href="#god-project">God Project</a></li>
+                <li><a href="#bio-consulting">Advanced Bio-Consulting</a></li>
+                <li><a href="#minicircle">R&D @ MiniCircle</a></li>
+            </ul>
+        </section>
+
+        <section id="god-project">
+            <header>
+                <span class="eyebrow">Worldwide</span>
+                <h2>God Project</h2>
+            </header>
+            <div class="intro-text">
+                <p>Helping Homo Sapiens evolve into Homo Deus.</p>
+            </div>
+            <br>
+            <a href="https://godproject.us/" target="_blank" class="btn-primary btn-accent" style="width: fit-content;">Learn More</a>
+        </section>
+
+        <section id="bio-consulting">
+            <header>
+                <span class="eyebrow">1-on-1</span>
+                <h2>Advanced<br>Bio-Consulting</h2>
+            </header>
+            <div class="intro-text">
+                <p>Helping the world's top performers break world records and reverse aging with special-forces-grade interventions.</p>
+            </div>
+            <br>
+
+            <div class="tab-menu">
+                <span class="tab-btn active" onclick="switchTab('clients')" id="btn-clients">Clients</span>
+                <span class="tab-btn" onclick="switchTab('protocol')" id="btn-protocol">Protocol</span>
+                <span class="tab-btn" onclick="switchTab('background')" id="btn-background">Experience</span>
+            </div>
+
+            <div id="clients-content" class="content-section visible">
+                <div class="review">
+                    <div class="quote">"Ryan delivered in-person performance coaching for my 105 kg world championship victory in Istanbul and numerous other victories. He is a wizard. His work is humanity's highest mission."</div>
+                    <div class="author-block">
+                        <span class="author-name">Devon Larratt <a href="https://www.instagram.com/devlarratt/" target="_blank" class="ig-link" aria-label="Devon Larratt on Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-left:5px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a></span>
+                        <span class="author-title">World Armwrestling Champion (2008–present), Canadian Special Forces</span>
+                    </div>
+                </div>
+                <div class="review">
+                    <div class="quote">"Ryan helped architect my victory at the 2025 Rogue Invitational, guiding me en route to an unprecedented performance state. My overhead press PR went from 465 to 490 after our first consult."</div>
+                    <div class="author-block">
+                        <span class="author-name">Mitchell Hooper <a href="https://www.instagram.com/mitchellhooper/" target="_blank" class="ig-link" aria-label="Mitchell Hooper on Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-left:5px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a></span>
+                        <span class="author-title">World's Strongest Man (2023)</span>
+                    </div>
+                </div>
+                <div class="review">
+                    <div class="quote">"A few months ago..." <a href="https://www.instagram.com/p/DVJgLbpDj3l/?igsh=MWRuNTFpM2FieW1icw%3D%3D" target="_blank" style="color: var(--accent); text-decoration: none; font-style: normal; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">(read post <span style="text-decoration: underline;">here</span>)</a></div>
+                    <div class="author-block">
+                        <span class="author-name">Gordon Ryan <a href="https://www.instagram.com/gordonlovesjiujitsu/" target="_blank" class="ig-link" aria-label="Gordon Ryan on Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-left:5px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a></span>
+                        <span class="author-title">7-Time ADCC World Champion</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="protocol-content" class="content-section">
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px; margin-bottom: 28px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 8px;">Phase I: Personalized Assessment</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">Based on personal goals (longevity, cognitive performance, athletic performance), we schedule in-depth testing to establish baselines for all relevant markers.</p>
+                </div>
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px; margin-bottom: 28px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 8px;">Phase II: Intervention Architecture</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">We design a bespoke map of protocols based on personal testing results, trade-off tolerance, and time availability.</p>
+                </div>
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 8px;">Phase III: Optimization Recursion</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6;">We re-assess relevant biomarkers at regular intervals, refining protocols according to individual responses as well as real-time updates in the relevant fields of research.</p>
+                </div>
+            </div>
+
+            <div id="background-content" class="content-section">
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px; margin-bottom: 20px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 5px;">R&D Lead — Minicircle Inc.</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem;">Design and development of nonviral longevity and augmentation gene therapies as a safer, more affordable entry point.</p>
+                </div>
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px; margin-bottom: 20px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 5px;">Postdoc — USAF/DARPA Biostasis</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem;">Conceptual framing of drug-induced human hibernation for wounded soldiers awaiting battlefield evacuation.</p>
+                </div>
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px; margin-bottom: 20px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 5px;">PhD, Molecular Mechanisms of Aging — Kaeberlein Lab, UW</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem;">Defined the regulation and function of a xenobiotic enzyme activated by multiple major longevity interventions.</p>
+                </div>
+                <div style="border-left: 1px solid var(--accent); padding-left: 15px;">
+                    <p style="color: white; font-weight: bold; margin-bottom: 5px;">Athlete — NFL</p>
+                    <p style="color: var(--text-grey); font-family: var(--font-mono); font-size: 0.85rem;">Previous chapter of life.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeG1aTmf57VfSnBQYqEQGye4npHJPb9CebgpEjQ9YLnKHdGkw/viewform?usp=header" target="_blank" class="btn-primary btn-accent">Apply</a>
+            </div>
+        </section>
+
+        <section id="minicircle">
+            <header>
+                <span class="eyebrow">R&D Lead</span>
+                <h2>MiniCircle</h2>
+            </header>
+            <div class="intro-text">
+                <p>Researching and developing plasmic-based gene therapies.</p>
+            </div>
+            <br>
+            <a href="https://minicircle.io/" target="_blank" class="btn-primary btn-accent" style="width: fit-content;">Learn More</a>
+        </section>
+
+        <section id="writing" style="border-bottom: none;">
+            <header>
+                <span class="eyebrow">Writing</span>
+                <h2>Earth Life<br>Code Book</h2>
+            </header>
+            <div class="book-cover">
+                    <img src="book-cover.jpg" 
+                         alt="Earth Life Code Book"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="book-cover-fallback">
+                        <span>Photo: Earth Life Code Book</span>
+                        <span class="book-cover-sub">book-cover.jpg</span>
+                    </div>
+                </div>
+                <div style="height: 30px;"></div>
+                <p class="book-desc">A pocket-manual of science fundamentals to help humans achieve Kardashev 1.</p>
+                <div style="height: 30px;"></div>
+                <a href="https://www.amazon.com/EARTH-LIFE-CODE-BOOK-Kardashev/dp/B0GCM9LKVQ" 
+                   target="_blank" class="btn-primary btn-accent" style="width: fit-content;">Order a Copy</a>
+        </section>
+
+    </div><!-- end container -->
+
+    <div class="container">
+        <footer>
+            <div class="footer-inner">
+                <div class="social-links">
+                    <a href="https://www.instagram.com/ryanrossner_phd/" target="_blank">Instagram</a>
+                    <a href="https://www.youtube.com/@RyanRossner_phd" target="_blank">YouTube</a>
+                    <a href="http://www.tiktok.com/@ryanrossner_phd" target="_blank">TikTok</a>
+                    <a href="https://x.com/ryanrossner" target="_blank">X</a>
+                    <a href="/cdn-cgi/l/email-protection#40292e262f003239212e322f33332e25326e232f2d">Email</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <span style="position:absolute; top:20px; right:20px; cursor:pointer; color:#666; font-size:1.5rem;" onclick="closeModal()">&times;</span>
+            <div style="margin-bottom: 30px; font-family: var(--font-mono); color: var(--accent); text-transform: uppercase;">Application</div>
+            <label class="form-label">Name</label>
+            <input type="text" id="input-name" class="form-input">
+            <label class="form-label">Email</label>
+            <input type="email" id="input-email" class="form-input">
+            <label class="form-label">Primary Objective</label>
+            <textarea id="input-goal" class="form-textarea" rows="3"></textarea>
+            <button class="submit-btn" onclick="sendEmail()">Submit</button>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('visible'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName + '-content').classList.add('visible');
+            document.getElementById('btn-' + tabName).classList.add('active');
+        }
+
+        function openModal() { document.getElementById('modal').style.display =
