@@ -466,12 +466,6 @@
         </div>
     </div>
 
-    <script>
-        function switchTab(tabName) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('visible'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabName + '-content').classList.add('visible');
-            document.getElementById('btn-' + tabName).classList.add('active');
-        }
-
-        function openModal() { document.getElementById('modal').style.display =
+    <script src="script.js"></script>
+</body>
+</html>
